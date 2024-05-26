@@ -1,20 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Create from './Create'
+import axios from 'axios'
 
 const Home = () => {
-    const [tasks, setTasks] = React.useState([])
-
+    const [todos, setTodos] = React.useState([])
+    useEffect(() => {
+        axios.get('http://localhost:3001/get')
+        .then(response => {
+            setTodos(response.data)
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    },[])
   return (
     <div class="home">
-        <h2>Todo List</h2>
+        <h1>Todo List</h1>
         <Create />
         {
-            tasks.length === 0 ? <p>No tasks</p> :
-            tasks.map((task, index) => {
+            todos.length === 0 ? <p>No tasks</p> :
+            todos.map((todo, index) => {
                 return (
                     <div key={index}>
                         <input type="checkbox" />
-                        <span>{task}</span>
+                        <span>{todo.task}</span>
                         <button type="button">Delete</button>
                     </div>
                 )
