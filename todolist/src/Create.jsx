@@ -6,7 +6,7 @@ const Create = () => {
   const handleClick = () => {
     axios.post('http://localhost:3001/task', {task: task})
     .then(response => {
-      console.log(response)
+      window.location.reload()
     })
     .catch(error => {
       console.log(error)

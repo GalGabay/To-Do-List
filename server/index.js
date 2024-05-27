@@ -14,9 +14,29 @@ app.get('/get',(req,res) => {
     .catch(err => res.json(err));
 });
 
+app.put('/updateadd/:id',(req,res) => {
+  const {id} = req.params;
+  TodoModel.findByIdAndUpdate({_id: id}, {finished: true})
+  .then(response => res.json(response))
+    .catch(err => res.json(err));
+})
+
+app.put('/updateremove/:id',(req,res) => {
+  const {id} = req.params;
+  TodoModel.findByIdAndUpdate({_id: id}, {finished: false})
+  .then(response => res.json(response))
+    .catch(err => res.json(err));
+})
+
+app.delete('/delete/:id',(req,res) => {
+  const {id} = req.params;
+  TodoModel.findByIdAndDelete({_id: id})
+ .then(response => res.json(response))
+ .catch(err => res.json(err));
+})
+
 app.post('/task',(req,res) => {
   const tas = req.body.task;
-  console.log(tas)
   TodoModel.create({
     task: tas
   }).then(result => res.json(result))
